@@ -1477,6 +1477,79 @@
     color: #cccccc;
   }
 
+  /* Dark theme main widget elements */
+  .widget-search-container.dark .field-trigger {
+    background-color: #2a2a2a;
+    color: #ffffff;
+    border-color: #555555;
+  }
+
+  .widget-search-container.dark .field-trigger:hover {
+    background-color: #3a3a3a;
+  }
+
+  .widget-search-container.dark .field-label {
+    color: #cccccc;
+  }
+
+  .widget-search-container.dark .field-value {
+    color: #ffffff;
+  }
+
+  .widget-search-container.dark .field-icon {
+    color: #cccccc;
+  }
+
+  .widget-search-container.dark .search-btn {
+    background-color: var(--widget-cl-primary);
+    color: #000000;
+  }
+
+  .widget-search-container.dark .search-btn:hover {
+    background-color: var(--widget-cl-primary-hover);
+  }
+
+  .widget-search-container.dark .promo-input {
+    background-color: #2a2a2a;
+    color: #ffffff;
+    border-color: #555555;
+  }
+
+  .widget-search-container.dark .promo-input::placeholder {
+    color: #888888;
+  }
+
+  .widget-search-container.dark .hotel-option {
+    background-color: #2a2a2a;
+    color: #ffffff;
+    border-color: #555555;
+  }
+
+  .widget-search-container.dark .hotel-option:hover {
+    background-color: #3a3a3a;
+  }
+
+  .widget-search-container.dark .hotel-option.selected {
+    background-color: var(--widget-cl-primary);
+    color: #000000;
+  }
+
+  .widget-search-container.dark .counter-btn {
+    background-color: #2a2a2a;
+    color: #ffffff;
+    border-color: #555555;
+  }
+
+  .widget-search-container.dark .counter-btn:hover {
+    background-color: #3a3a3a;
+  }
+
+  .widget-search-container.dark .counter-btn:disabled {
+    background-color: #1a1a1a;
+    color: #666666;
+    border-color: #333333;
+  }
+
   /* Accessibility */
   /* Enhanced focus styles for accessibility */
   .widget-search-container *:focus {
