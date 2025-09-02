@@ -267,53 +267,61 @@ class WidgetSearch {
       const dropdown = dateSelector.querySelector(".field-dropdown") as HTMLElement;
       const calendar = dateSelector.querySelector(".calendar-container") as HTMLElement;
       
-      console.log("Calendar elements found:", { trigger: !!trigger, dropdown: !!dropdown, calendar: !!calendar });
+      console.log("openCalendar called - elements found:", {
+        dateSelector: !!dateSelector,
+        trigger: !!trigger,
+        dropdown: !!dropdown,
+        calendar: !!calendar
+      });
       
-      if (trigger && dropdown && calendar) {
-        // Close other dropdowns first
-        const container = this.container;
-        const allDropdowns = container.querySelectorAll(".field-dropdown");
-        allDropdowns.forEach(dd => {
-          if (dd !== dropdown) {
-            (dd as HTMLElement).style.display = "none";
-          }
-        });
+      if (trigger) {
+        console.log("Trigger found, attempting click...");
         
-        // Open the calendar dropdown
-        dropdown.style.display = "block";
-        dropdown.style.visibility = "visible";
-        dropdown.style.opacity = "1";
-        trigger.setAttribute("aria-expanded", "true");
-        
-        console.log("Calendar dropdown opened:", {
-          display: dropdown.style.display,
-          visibility: dropdown.style.visibility,
-          opacity: dropdown.style.opacity
-        });
-        
-        // Render the calendar content
-        const widgetState = (this as any).__state;
-        if (widgetState) {
-          console.log("Rendering calendar with state:", {
-            checkIn: widgetState.checkInDate,
-            checkOut: widgetState.checkOutDate,
-            currentMonth: widgetState.currentCalendarMonth
-          });
+        // Try multiple approaches
+        try {
+          // Method 1: Direct click
+          trigger.click();
+          console.log("Direct click attempted");
           
-          renderCalendar(
-            calendar,
-            this.config,
-            {
-              checkIn: widgetState.checkInDate,
-              checkOut: widgetState.checkOutDate,
-            },
-            widgetState.currentCalendarMonth
-          );
+          // Method 2: Dispatch click event
+          setTimeout(() => {
+            const clickEvent = new MouseEvent('click', {
+              bubbles: true,
+              cancelable: true,
+              view: window
+            });
+            trigger.dispatchEvent(clickEvent);
+            console.log("Dispatched click event");
+          }, 10);
           
-          console.log("Calendar rendered, content length:", calendar.innerHTML.length);
+          // Method 3: Manual opening as fallback
+          setTimeout(() => {
+            if (dropdown && calendar) {
+              console.log("Fallback: Manual opening");
+              dropdown.style.display = "block";
+              trigger.setAttribute("aria-expanded", "true");
+              
+              const widgetState = (this as any).__state;
+              if (widgetState) {
+                renderCalendar(
+                  calendar,
+                  this.config,
+                  {
+                    checkIn: widgetState.checkInDate,
+                    checkOut: widgetState.checkOutDate,
+                  },
+                  widgetState.currentCalendarMonth
+                );
+                console.log("Calendar rendered manually");
+              }
+            }
+          }, 50);
+          
+        } catch (error) {
+          console.error("Error in openCalendar:", error);
         }
       } else {
-        console.error("Calendar elements not found:", { trigger: !!trigger, dropdown: !!dropdown, calendar: !!calendar });
+        console.error("Trigger not found");
       }
     } else {
       console.error("Date selector not found");
