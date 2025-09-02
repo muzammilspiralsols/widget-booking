@@ -1,8 +1,8 @@
 // Widget Entry Point
 import { WidgetConfig, parseConfig } from "./types/config";
-import { renderWidget, renderModalWidget } from "./components/render";
+import { renderWidget, renderModalWidget, renderCalendar } from "./components/render";
 import { attachEvents } from "./components/events";
-import { formatDate } from "./utils/utils";
+import { formatDate, t } from "./utils/utils";
 import "./styles/widget.scss";
 
 interface UpdateDataParams {
@@ -136,8 +136,8 @@ class WidgetSearch {
       this.updateHotelSelection(data.idHotel);
     }
 
-    // Update promo code
-    if (data.promoCode) {
+    // Update promo code (including clearing with empty string)
+    if (data.promoCode !== undefined) {
       this.updatePromoCode(data.promoCode);
     }
 
@@ -148,6 +148,15 @@ class WidgetSearch {
 
     if (data.checkOut) {
       this.updateCheckOutDate(data.checkOut);
+    }
+
+    // If both dates are provided, update display with both
+    if (data.checkIn && data.checkOut) {
+      const checkInDate = this.parseDateString(data.checkIn);
+      const checkOutDate = this.parseDateString(data.checkOut);
+      if (checkInDate && checkOutDate) {
+        this.updateDateDisplay(checkInDate, checkOutDate);
+      }
     }
 
     // Update date constraints
@@ -204,12 +213,23 @@ class WidgetSearch {
     const promoInput = this.container.querySelector(".promo-input") as HTMLInputElement;
     if (promoInput) {
       promoInput.value = promoCode;
+      
+      // Update the widget's internal state
+      const widgetState = (this as any).__state;
+      if (widgetState) {
+        widgetState.promoCode = promoCode;
+      }
     }
   }
 
   private updateCheckInDate(dateStr: string) {
     const date = this.parseDateString(dateStr);
     if (date) {
+      // Update widget state
+      const widgetState = (this as any).__state;
+      if (widgetState) {
+        widgetState.checkInDate = date;
+      }
       this.updateDateDisplay(date, null);
     }
   }
@@ -217,6 +237,11 @@ class WidgetSearch {
   private updateCheckOutDate(dateStr: string) {
     const date = this.parseDateString(dateStr);
     if (date) {
+      // Update widget state
+      const widgetState = (this as any).__state;
+      if (widgetState) {
+        widgetState.checkOutDate = date;
+      }
       this.updateDateDisplay(null, date);
     }
   }
@@ -239,9 +264,59 @@ class WidgetSearch {
     const dateSelector = this.container.querySelector(".date-selector");
     if (dateSelector) {
       const trigger = dateSelector.querySelector(".field-trigger") as HTMLButtonElement;
-      if (trigger) {
-        trigger.click();
+      const dropdown = dateSelector.querySelector(".field-dropdown") as HTMLElement;
+      const calendar = dateSelector.querySelector(".calendar-container") as HTMLElement;
+      
+      console.log("Calendar elements found:", { trigger: !!trigger, dropdown: !!dropdown, calendar: !!calendar });
+      
+      if (trigger && dropdown && calendar) {
+        // Close other dropdowns first
+        const container = this.container;
+        const allDropdowns = container.querySelectorAll(".field-dropdown");
+        allDropdowns.forEach(dd => {
+          if (dd !== dropdown) {
+            (dd as HTMLElement).style.display = "none";
+          }
+        });
+        
+        // Open the calendar dropdown
+        dropdown.style.display = "block";
+        dropdown.style.visibility = "visible";
+        dropdown.style.opacity = "1";
+        trigger.setAttribute("aria-expanded", "true");
+        
+        console.log("Calendar dropdown opened:", {
+          display: dropdown.style.display,
+          visibility: dropdown.style.visibility,
+          opacity: dropdown.style.opacity
+        });
+        
+        // Render the calendar content
+        const widgetState = (this as any).__state;
+        if (widgetState) {
+          console.log("Rendering calendar with state:", {
+            checkIn: widgetState.checkInDate,
+            checkOut: widgetState.checkOutDate,
+            currentMonth: widgetState.currentCalendarMonth
+          });
+          
+          renderCalendar(
+            calendar,
+            this.config,
+            {
+              checkIn: widgetState.checkInDate,
+              checkOut: widgetState.checkOutDate,
+            },
+            widgetState.currentCalendarMonth
+          );
+          
+          console.log("Calendar rendered, content length:", calendar.innerHTML.length);
+        }
+      } else {
+        console.error("Calendar elements not found:", { trigger: !!trigger, dropdown: !!dropdown, calendar: !!calendar });
       }
+    } else {
+      console.error("Date selector not found");
     }
   }
 
@@ -267,13 +342,23 @@ class WidgetSearch {
       const valueElement = trigger?.querySelector(".field-value") as HTMLElement;
       
       if (valueElement) {
-        if (checkIn && checkOut) {
-          const checkInFormatted = formatDate(checkIn, "compact");
-          const checkOutFormatted = formatDate(checkOut, "compact");
+        // Get current state if not provided
+        const widgetState = (this as any).__state;
+        const currentCheckIn = checkIn || (widgetState ? widgetState.checkInDate : null);
+        const currentCheckOut = checkOut || (widgetState ? widgetState.checkOutDate : null);
+        
+        if (currentCheckIn && currentCheckOut) {
+          const checkInFormatted = formatDate(currentCheckIn, "compact");
+          const checkOutFormatted = formatDate(currentCheckOut, "compact");
           valueElement.textContent = `${checkInFormatted} — ${checkOutFormatted}`;
-        } else if (checkIn) {
-          const checkInFormatted = formatDate(checkIn, "compact");
-          valueElement.textContent = `${checkInFormatted} — Select checkout`;
+        } else if (currentCheckIn) {
+          const checkInFormatted = formatDate(currentCheckIn, "compact");
+          valueElement.textContent = `${checkInFormatted} — ${t("date.choose_checkout", this.config.locale)}`;
+        } else if (currentCheckOut) {
+          const checkOutFormatted = formatDate(currentCheckOut, "compact");
+          valueElement.textContent = `Select checkin — ${checkOutFormatted}`;
+        } else {
+          valueElement.textContent = t("date.checkin_checkout", this.config.locale);
         }
       }
     }

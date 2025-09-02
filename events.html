@@ -491,10 +491,12 @@ if (promoCode) {
             }
             
             try {
+                logEvent('Attempting to open calendar...', 'info');
                 widget.updateData({ openCalendar: true });
-                logEvent('Calendar opened', 'success');
+                logEvent('Calendar opened successfully', 'success');
             } catch (error) {
                 logEvent(`Error opening calendar: ${error.message}`, 'error');
+                console.error('Calendar open error:', error);
             }
         }
 
@@ -506,6 +508,7 @@ if (promoCode) {
             }
             
             try {
+                logEvent(`Attempting to ${promoCode ? 'set' : 'clear'} promo code...`, 'info');
                 widget.updateData({ promoCode: promoCode });
                 if (promoCode) {
                     logEvent(`Promo code set: ${promoCode}`, 'success');
@@ -516,6 +519,7 @@ if (promoCode) {
                 }
             } catch (error) {
                 logEvent(`Error setting promo code: ${error.message}`, 'error');
+                console.error('Promo code error:', error);
             }
         }
 
