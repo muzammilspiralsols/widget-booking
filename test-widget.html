@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Widget Test Page</title>
+    
+    <!-- Your Widget CSS -->
+    <link rel="stylesheet" href="https://widget-booking-silk.vercel.app/widget.css">
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .widget-section {
+            margin: 40px 0;
+            padding: 20px;
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+        .widget-section h2 {
+            margin-top: 0;
+            color: #555;
+        }
+        .widget-section p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        /* Override the fixed positioning for widgets in test sections */
+        .widget-section .widget-search-container {
+            position: relative !important;
+            bottom: auto !important;
+            left: auto !important;
+            transform: none !important;
+            z-index: auto !important;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Hotel Booking Widget Test</h1>
+        
+        <div class="widget-section">
+            <h2>Test 1: Basic Hotel Widget</h2>
+            <p>This is a basic hotel widget with inline layout and light theme:</p>
+            <div id="widget-search-1" 
+                 data-hotel-id="12345"
+                 data-type="hotel"
+                 data-layout="inline"
+                 data-theme="light"
+                 data-show-promo-code="true"
+                 data-external-url="https://www.miweb.com/buscar">
+            </div>
+        </div>
+        
+        <div class="widget-section">
+            <h2>Test 2: Chain Widget with Hotel Selector</h2>
+            <p>This is a chain widget that allows selecting from multiple hotels:</p>
+            <div id="widget-search-2" 
+                 data-hotel-id="all-hotels"
+                 data-type="chain"
+                 data-layout="inline"
+                 data-theme="light"
+                 data-show-promo-code="true"
+                 data-show-hotel-selector="true"
+                 data-external-url="https://www.miweb.com/buscar">
+            </div>
+        </div>
+        
+        <div class="widget-section">
+            <h2>Test 3: Dark Theme Widget</h2>
+            <p>This widget uses the dark theme:</p>
+            <div id="widget-search-3" 
+                 data-hotel-id="45678"
+                 data-type="hotel"
+                 data-layout="inline"
+                 data-theme="dark"
+                 data-show-promo-code="true"
+                 data-external-url="https://www.miweb.com/buscar">
+            </div>
+        </div>
+        
+        <div class="widget-section">
+            <h2>Test 4: Column Layout Widget</h2>
+            <p>This widget uses column layout (vertical arrangement):</p>
+            <div id="widget-search-4" 
+                 data-hotel-id="78901"
+                 data-type="hotel"
+                 data-layout="column"
+                 data-theme="light"
+                 data-show-promo-code="true"
+                 data-external-url="https://www.miweb.com/buscar">
+            </div>
+        </div>
+        
+        <div class="widget-section">
+            <h2>Test 5: Mobile Modal Test</h2>
+            <p>Resize your browser to less than 1024px width to see the mobile modal behavior:</p>
+            <div id="widget-search-5" 
+                 data-hotel-id="mobile-test"
+                 data-type="hotel"
+                 data-layout="inline"
+                 data-theme="light"
+                 data-show-promo-code="true"
+                 data-external-url="https://www.miweb.com/buscar">
+            </div>
+        </div>
+    </div>
+    
+    <!-- Your Widget JavaScript -->
+    <script type="module" src="https://widget-booking-silk.vercel.app/widget.js"></script>
+</body>
+</html>

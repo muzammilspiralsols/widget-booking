@@ -9,6 +9,7 @@ import {
 // Mock the components to focus on widget logic
 jest.mock("../src/components/render", () => ({
   renderWidget: jest.fn(),
+  renderModalWidget: jest.fn(),
 }));
 
 jest.mock("../src/components/events", () => ({
@@ -16,11 +17,14 @@ jest.mock("../src/components/events", () => ({
 }));
 
 // Import mocked modules
-import { renderWidget } from "../src/components/render";
+import { renderWidget, renderModalWidget } from "../src/components/render";
 import { attachEvents } from "../src/components/events";
 
 const mockRenderWidget = renderWidget as jest.MockedFunction<
   typeof renderWidget
+>;
+const mockRenderModalWidget = renderModalWidget as jest.MockedFunction<
+  typeof renderModalWidget
 >;
 const mockAttachEvents = attachEvents as jest.MockedFunction<
   typeof attachEvents

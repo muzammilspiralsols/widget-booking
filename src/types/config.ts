@@ -95,8 +95,8 @@ export function parseConfig(container: HTMLElement): WidgetConfig {
     
     // Date configuration
     dateFormat: dataset.dateFormat || "dd-MM-yyyy",
-    minDate: dataset.minDate ? new Date(dataset.minDate) : undefined,
-    maxDate: dataset.maxDate ? new Date(dataset.maxDate) : undefined,
+    minDate: undefined, // Will be set below if valid
+    maxDate: undefined, // Will be set below if valid
     
     // Theme and styling
     theme: (dataset.theme as "light" | "dark") || "light",
@@ -451,7 +451,7 @@ export const MOCK_HOTELS_FERGUS: Hotel[] = [
 ];
 
 export function getHotelGroups(): HotelGroup[] {
-  const grouped = MOCK_HOTELS_FERGUS.reduce((acc, hotel) => {
+  const grouped = MOCK_HOTELS.reduce((acc, hotel) => {
     if (hotel.id === "all-hotels") return acc;
 
     const location = hotel.location;
@@ -469,5 +469,6 @@ export function getHotelGroups(): HotelGroup[] {
 }
 
 export function getHotelById(id: string): Hotel | undefined {
-  return MOCK_HOTELS_FERGUS.find((hotel) => hotel.id === id);
+  // Use English version for consistency with tests
+  return MOCK_HOTELS.find((hotel) => hotel.id === id);
 }

@@ -1,43 +1,43 @@
-import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+// Jest is already imported globally
 
 // Mock DOM
 const mockContainer = {
-  querySelector: vi.fn(),
-  querySelectorAll: vi.fn(),
-  addEventListener: vi.fn(),
-  setAttribute: vi.fn(),
-  getAttribute: vi.fn(),
-  hasAttribute: vi.fn(),
-  dispatchEvent: vi.fn()
+  querySelector: jest.fn(),
+  querySelectorAll: jest.fn(),
+  addEventListener: jest.fn(),
+  setAttribute: jest.fn(),
+  getAttribute: jest.fn(),
+  hasAttribute: jest.fn(),
+  dispatchEvent: jest.fn()
 };
 
 const mockElement = {
-  addEventListener: vi.fn(),
-  removeEventListener: vi.fn(),
-  click: vi.fn(),
-  focus: vi.fn(),
-  blur: vi.fn(),
-  setAttribute: vi.fn(),
-  getAttribute: vi.fn(),
-  hasAttribute: vi.fn(),
+  addEventListener: jest.fn(),
+  removeEventListener: jest.fn(),
+  click: jest.fn(),
+  focus: jest.fn(),
+  blur: jest.fn(),
+  setAttribute: jest.fn(),
+  getAttribute: jest.fn(),
+  hasAttribute: jest.fn(),
   classList: {
-    add: vi.fn(),
-    remove: vi.fn(),
-    contains: vi.fn(),
-    toggle: vi.fn()
+    add: jest.fn(),
+    remove: jest.fn(),
+    contains: jest.fn(),
+    toggle: jest.fn()
   },
   textContent: '',
   value: '',
   disabled: false,
   parentNode: {
-    removeChild: vi.fn(),
-    insertBefore: vi.fn()
+    removeChild: jest.fn(),
+    insertBefore: jest.fn()
   }
 };
 
 describe('Widget Events Tests', () => {
   beforeEach(() => {
-    vi.clearAllMocks();
+    jest.clearAllMocks();
     
     // Setup default mocks
     mockContainer.querySelector.mockReturnValue(mockElement);
@@ -46,19 +46,19 @@ describe('Widget Events Tests', () => {
   });
 
   afterEach(() => {
-    vi.restoreAllMocks();
+    jest.restoreAllMocks();
   });
 
   describe('updateData Event', () => {
     it('should update hotel selection', () => {
       const widget = {
-        updateHotelSelection: vi.fn(),
-        updatePromoCode: vi.fn(),
-        updateCheckInDate: vi.fn(),
-        updateCheckOutDate: vi.fn(),
-        updateMinDate: vi.fn(),
-        updateMaxDate: vi.fn(),
-        openCalendar: vi.fn()
+        updateHotelSelection: jest.fn(),
+        updatePromoCode: jest.fn(),
+        updateCheckInDate: jest.fn(),
+        updateCheckOutDate: jest.fn(),
+        updateMinDate: jest.fn(),
+        updateMaxDate: jest.fn(),
+        openCalendar: jest.fn()
       };
 
       const data = {
@@ -105,13 +105,13 @@ describe('Widget Events Tests', () => {
 
     it('should handle partial data updates', () => {
       const widget = {
-        updateHotelSelection: vi.fn(),
-        updatePromoCode: vi.fn(),
-        updateCheckInDate: vi.fn(),
-        updateCheckOutDate: vi.fn(),
-        updateMinDate: vi.fn(),
-        updateMaxDate: vi.fn(),
-        openCalendar: vi.fn()
+        updateHotelSelection: jest.fn(),
+        updatePromoCode: jest.fn(),
+        updateCheckInDate: jest.fn(),
+        updateCheckOutDate: jest.fn(),
+        updateMinDate: jest.fn(),
+        updateMaxDate: jest.fn(),
+        openCalendar: jest.fn()
       };
 
       const data = {
@@ -134,16 +134,16 @@ describe('Widget Events Tests', () => {
 
     it('should handle empty data object', () => {
       const widget = {
-        updateHotelSelection: vi.fn(),
-        updatePromoCode: vi.fn(),
-        updateCheckInDate: vi.fn(),
-        updateCheckOutDate: vi.fn(),
-        updateMinDate: vi.fn(),
-        updateMaxDate: vi.fn(),
-        openCalendar: vi.fn()
+        updateHotelSelection: jest.fn(),
+        updatePromoCode: jest.fn(),
+        updateCheckInDate: jest.fn(),
+        updateCheckOutDate: jest.fn(),
+        updateMinDate: jest.fn(),
+        updateMaxDate: jest.fn(),
+        openCalendar: jest.fn()
       };
 
-      const data = {};
+      const data :any= {};
 
       // Simulate updateData call with empty data
       if (data.idHotel) {
@@ -301,7 +301,12 @@ describe('Widget Events Tests', () => {
           const year = parseInt(parts[2]);
           
           if (!isNaN(day) && !isNaN(month) && !isNaN(year)) {
-            return new Date(year, month, day, 12, 0, 0, 0);
+            const date = new Date(year, month, day, 12, 0, 0, 0);
+            // Check if the date was auto-corrected (invalid input)
+            if (date.getFullYear() !== year || date.getMonth() !== month || date.getDate() !== day) {
+              return null; // Date was auto-corrected, so it was invalid
+            }
+            return date;
           }
         }
         return null;
@@ -426,7 +431,7 @@ describe('Widget Events Tests', () => {
     it('should attach event listeners correctly', () => {
       const element = mockElement;
       const eventType = 'click';
-      const handler = vi.fn();
+      const handler = jest.fn();
 
       element.addEventListener(eventType, handler);
 
@@ -436,7 +441,7 @@ describe('Widget Events Tests', () => {
     it('should remove event listeners correctly', () => {
       const element = mockElement;
       const eventType = 'click';
-      const handler = vi.fn();
+      const handler = jest.fn();
 
       element.removeEventListener(eventType, handler);
 
@@ -445,7 +450,7 @@ describe('Widget Events Tests', () => {
 
     it('should handle multiple event listeners', () => {
       const element = mockElement;
-      const handlers = [vi.fn(), vi.fn(), vi.fn()];
+      const handlers = [jest.fn(), jest.fn(), jest.fn()];
 
       handlers.forEach(handler => {
         element.addEventListener('click', handler);

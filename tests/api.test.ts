@@ -1,22 +1,20 @@
-import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-
 // Mock fetch
-global.fetch = vi.fn();
+global.fetch = jest.fn();
 
 describe('API Integration Tests', () => {
   beforeEach(() => {
-    vi.clearAllMocks();
+    jest.clearAllMocks();
   });
 
   afterEach(() => {
-    vi.restoreAllMocks();
+    jest.restoreAllMocks();
   });
 
   describe('Availability Check', () => {
     it('should make availability request with correct parameters', async () => {
       const mockResponse = {
         ok: true,
-        json: vi.fn().mockResolvedValue({
+        json: jest.fn().mockResolvedValue({
           available: true,
           message: 'Rooms available'
         })
@@ -152,7 +150,7 @@ describe('API Integration Tests', () => {
     it('should handle no availability response', async () => {
       const mockResponse = {
         ok: true,
-        json: vi.fn().mockResolvedValue({
+        json: jest.fn().mockResolvedValue({
           available: false,
           message: 'No rooms available for selected dates'
         })
