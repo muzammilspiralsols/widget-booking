@@ -15,6 +15,10 @@
       "dest": "/dist/$1"
     },
     {
+      "src": "/events.html",
+      "dest": "/events.html"
+    },
+    {
       "src": "/(.*)",
       "dest": "/index.html"
     }
