@@ -15,7 +15,7 @@
       "dest": "/dist/$1"
     },
     {
-      "src": "/events.html",
+      "src": "/events",
       "dest": "/events.html"
     },
     {
