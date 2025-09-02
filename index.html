@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hotel Booking Widget - Development</title>
+    <link rel="stylesheet" href="dist/widget.css" />
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          sans-serif;
+        margin: 0;
+        padding: 20px;
+        background-color: #f5f5f5;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        color: #333;
+        margin-bottom: 30px;
+        text-align: center;
+      }
+
+      .demo-section {
+        margin-bottom: 40px;
+        padding: 20px;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+      }
+
+      .demo-section h2 {
+        color: #555;
+        margin-top: 0;
+        margin-bottom: 15px;
+      }
+
+      .demo-section p {
+        color: #666;
+        margin-bottom: 20px;
+      }
+
+      .widget-container {
+        margin: 20px 0;
+      }
+
+      pre {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 4px;
+        overflow-x: auto;
+        font-size: 14px;
+        margin: 15px 0;
+      }
+
+      code {
+        color: #e83e8c;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Hotel Booking Widget - Development</h1>
+
+      <!-- Fergus Widget Test -->
+      <div class="demo-section">
+        <h2>Hotel Fergus Widget</h2>
+        <p>Fergus selector with custom configuration:</p>
+
+        <div class="widget-container">
+          <div
+            id="widget-search-2"
+            data-book-id="chain123"
+            data-type="chain"
+            data-currency="EUR"
+            data-locale="es-ES"
+            data-layout="inline"
+            data-default-adults="2"
+            data-default-children="1"
+            data-theme="light"
+          ></div>
+        </div>
+
+        <pre><code>&lt;div id="widget-search-2" 
+     data-book-id="chain123"
+     data-type="chain"
+     data-currency="EUR"
+     data-locale="es-ES"
+     data-layout="inline"
+     data-default-adults="2"
+     data-default-children="1"
+     data-theme="light"&gt;
+&lt;/div&gt;</code></pre>
+      </div>
+
+      <!-- Basic Widget Test -->
+      <div class="demo-section">
+        <h2>1. Basic Hotel Widget 1</h2>
+        <p>Single hotel booking widget with default configuration:</p>
+
+        <div class="widget-container">
+          <!-- <div
+            id="widget-search-1"
+            data-book-id="12345"
+            data-type="hotel"
+            data-hotel="1"
+            data-currency="EUR"
+            data-locale="es-ES"
+            data-layout="inline"
+            data-default-adults="2"
+            data-default-children="0"
+            data-default-rooms="1"
+            data-max-adults="4"
+            data-max-children="4"
+            data-max-rooms="5"
+            data-min-child-age="0"
+            data-max-child-age="17"
+            data-base-url="https://selector-ui.web.app/"
+            data-url-chain="https://booking.example.com/chain"
+            data-url-hotel="https://booking.example.com/hotel"
+            data-api-url="https://api.example.com"
+            data-show-promo-code="true"
+            data-show-hotel-selector="true"
+            data-show-price="true"
+            data-date-format="dd-MM-yyyy"
+            data-theme="light"
+            data-show-checkin-online="true"
+            data-checkin-online-url="https://checkin.example.com"
+            data-checkin-online-text="Check-in Online"
+          ></div> -->
+        </div>
+
+        <pre><code>&lt;div id="widget-search-1" 
+     data-book-id="12345"
+     data-type="hotel"
+     data-hotel="1"
+     data-currency="EUR"
+     data-locale="es-ES"
+     data-layout="inline"
+     data-default-adults="2"
+     data-default-children="0"
+     data-default-rooms="1"
+     data-max-adults="4"
+     data-max-children="4"
+     data-max-rooms="5"
+     data-min-child-age="0"
+     data-max-child-age="17"
+     data-base-url="https://selector-ui.web.app/"
+     data-url-chain="https://booking.example.com/chain"
+     data-url-hotel="https://booking.example.com/hotel"
+     data-api-url="https://api.example.com"
+     data-show-promo-code="true"
+     data-show-hotel-selector="true"
+     data-show-price="true"
+     data-date-format="dd-MM-yyyy"
+     data-theme="light"
+     data-show-checkin-online="true"
+     data-checkin-online-url="https://checkin.example.com"
+     data-checkin-online-text="Check-in Online"&gt;
+&lt;/div&gt;</code></pre>
+      </div>
+
+      <!-- Chain Widget Test -->
+      <!-- <div class="demo-section">
+        <h2>2. Hotel Chain Widget</h2>
+        <p>Multi-hotel chain selector with custom configuration:</p>
+
+        <div class="widget-container">
+          <div
+            id="widget-search-2"
+            data-book-id="chain123"
+            data-type="chain"
+            data-currency="EUR"
+            data-locale="es-ES"
+            data-layout="inline"
+            data-default-adults="2"
+            data-default-children="1"
+            data-theme="light"
+          ></div>
+        </div>
+
+        <pre><code>&lt;div id="widget-search-2" 
+     data-book-id="chain123"
+     data-type="chain"
+     data-currency="EUR"
+     data-locale="es-ES"
+     data-layout="inline"
+     data-default-adults="2"
+     data-default-children="1"
+     data-theme="light"&gt;
+&lt;/div&gt;</code></pre>
+      </div> -->
+
+      <!-- Column Layout Test -->
+      <!-- <div class="demo-section">
+        <h2>3. Dark Theme Widget (Spanish + EUR)</h2>
+        <p>Dark theme with Spanish localization and Euro currency:</p>
+
+        <div class="widget-container" style="max-width: 300px">
+          <div
+            id="widget-search-3"
+            data-book-id="hotel456"
+            data-type="hotel"
+            data-layout="column"
+            data-theme="dark"
+            data-show-promo-code="false"
+            data-currency="EUR"
+            data-locale="es-ES"
+            data-min-date="2025-01-01"
+            data-max-date="2025-12-31"
+          ></div>
+        </div>
+
+        <pre><code>&lt;div id="widget-search-3" 
+     data-book-id="hotel456"
+     data-type="hotel"
+     data-layout="column"
+     data-theme="dark"
+     data-show-promo-code="false"
+     data-currency="EUR"
+     data-locale="es-ES"
+     data-min-date="2025-01-01"
+     data-max-date="2025-12-31"&gt;
+&lt;/div&gt;</code></pre>
+      </div> -->
+
+      <!-- Advanced Configuration Examples -->
+      <!-- <div class="demo-section">
+        <h2>4. Hotel Chain Widget with Preselected Hotel</h2>
+        <p>
+          Chain widget with hotel preselected, custom occupancy limits, and GBP
+          currency:
+        </p>
+
+        <div class="widget-container">
+          <div
+            id="widget-search-4"
+            data-book-id="chain789"
+            data-type="chain"
+            data-hotel="playa-garden-selection-hotel-spa"
+            data-currency="GBP"
+            data-locale="en-GB"
+            data-layout="inline"
+            data-theme="light"
+            data-max-rooms="3"
+            data-max-adults="6"
+            data-max-children="4"
+            data-min-child-age="2"
+            data-max-child-age="16"
+            data-default-adults="2"
+            data-default-children="1"
+          ></div>
+        </div>
+
+        <pre><code>&lt;div id="widget-search-4" 
+     data-book-id="chain789"
+     data-type="chain"
+     data-hotel="playa-garden-selection-hotel-spa"
+     data-currency="GBP"
+     data-locale="en-GB"
+     data-max-rooms="3"
+     data-max-adults="6"
+     data-max-children="4"
+     data-min-child-age="2"
+     data-max-child-age="16"
+     data-default-adults="2"
+     data-default-children="1"&gt;
+&lt;/div&gt;</code></pre>
+      </div> -->
+
+      =
+
+      <!-- Configuration Reference -->
+      <div class="demo-section">
+        <h2>Configuration Reference</h2>
+        <h3>Required Parameters</h3>
+        <table
+          style="width: 100%; border-collapse: collapse; margin-bottom: 20px"
+        >
+          <thead>
+            <tr style="background: #f8f9fa">
+              <th
+                style="padding: 12px; text-align: left; border: 1px solid #ddd"
+              >
+                Parameter
+              </th>
+              <th
+                style="padding: 12px; text-align: left; border: 1px solid #ddd"
+              >
+                Description
+              </th>
+              <th
+                style="padding: 12px; text-align: left; border: 1px solid #ddd"
+              >
+                Example
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding: 12px; border: 1px solid #ddd">
+                <code>data-book-id</code>
+              </td>
+              <td style="padding: 12px; border: 1px solid #ddd">
+                Unique identifier for booking system
+              </td>
+              <td style="padding: 12px; border: 1px solid #ddd">"hotel123"</td>
+            </tr>
+            <tr>
+              <td style="padding: 12px; border: 1px solid #ddd">
+                <code>data-type</code>
+              </td>
+              <td style="padding: 12px; border: 1px solid #ddd">
+                "hotel" or "chain"
+              </td>
+              <td style="padding: 12px; border: 1px solid #ddd">"chain"</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Layout & Appearance</h3>
+        <table
+          style="width: 100%; border-collapse: collapse; margin-bottom: 20px"
+        >
+          <thead>
+            <tr style="background: #f8f9fa">
+              <th
+                style="padding: 12px; text-align: left; border: 1px solid #ddd"
+              >
+                Parameter
+              </th>
+              <th
+                style="padding: 12px; text-align: left; border: 1px solid #ddd"
+              >
+                Options
+              </th>
+              <th
+                style="padding: 12px; text-align: left; border: 1px solid #ddd"
+              >
+                Default
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding: 12px; border: 1px solid #ddd">
+                <code>data-layout</code>
+              </td>
+              <td style="padding: 12px; border: 1px solid #ddd">
+                "inline", "column", "expand"
+              </td>
+              <td style="padding: 12px; border: 1px solid #ddd">"inline"</td>
+            </tr>
+            <tr>
+              <td style="padding: 12px; border: 1px solid #ddd">
+                <code>data-theme</code>
+              </td>
+              <td style="padding: 12px; border: 1px solid #ddd">
+                "light", "dark"
+              </td>
+              <td style="padding: 12px; border: 1px solid #ddd">"light"</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Currency & Localization</h3>
+        <table
+          style="width: 100%; border-collapse: collapse; margin-bottom: 20px"
+        >
+          <thead>
+            <tr style="background: #f8f9fa">
+              <th
+                style="padding: 12px; text-align: left; border: 1px solid #ddd"
+              >
+                Parameter
+              </th>
+              <th
+                style="padding: 12px; text-align: left; border: 1px solid #ddd"
+              >
+                Examples
+              </th>
+              <th
+                style="padding: 12px; text-align: left; border: 1px solid #ddd"
+              >
+                Notes
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding: 12px; border: 1px solid #ddd">
+                <code>data-currency</code>
+              </td>
+              <td style="padding: 12px; border: 1px solid #ddd">
+                "EUR", "USD", "GBP", "JPY"
+              </td>
+              <td style="padding: 12px; border: 1px solid #ddd">
+                Controls price display format
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 12px; border: 1px solid #ddd">
+                <code>data-locale</code>
+              </td>
+              <td style="padding: 12px; border: 1px solid #ddd">
+                "es-ES", "en-US", "en-GB"
+              </td>
+              <td style="padding: 12px; border: 1px solid #ddd">
+                Controls language and date formats
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Hotel Selection</h3>
+        <table
+          style="width: 100%; border-collapse: collapse; margin-bottom: 20px"
+        >
+          <thead>
+            <tr style="background: #f8f9fa">
+              <th
+                style="padding: 12px; text-align: left; border: 1px solid #ddd"
+              >
+                Parameter
+              </th>
+              <th
+                style="padding: 12px; text-align: left; border: 1px solid #ddd"
+              >
+                Description
+              </th>
+              <th
+                style="padding: 12px; text-align: left; border: 1px solid #ddd"
+              >
+                Example
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding: 12px; border: 1px solid #ddd">
+                <code>data-hotel</code>
+              </td>
+              <td style="padding: 12px; border: 1px solid #ddd">
+                Preselect specific hotel by ID
+              </td>
+              <td style="padding: 12px; border: 1px solid #ddd">
+                "playa-garden-selection-hotel-spa"
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Date Constraints</h3>
+        <table
+          style="width: 100%; border-collapse: collapse; margin-bottom: 20px"
+        >
+          <thead>
+            <tr style="background: #f8f9fa">
+              <th
+                style="padding: 12px; text-align: left; border: 1px solid #ddd"
+              >
+                Parameter
+              </th>
+              <th
+                style="padding: 12px; text-align: left; border: 1px solid #ddd"
+              >
+                Format
+              </th>
+              <th
+                style="padding: 12px; text-align: left; border: 1px solid #ddd"
+              >
+                Example
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding: 12px; border: 1px solid #ddd">
+                <code>data-min-date</code>
+              </td>
+              <td style="padding: 12px; border: 1px solid #ddd">YYYY-MM-DD</td>
+              <td style="padding: 12px; border: 1px solid #ddd">
+                "2024-07-01"
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 12px; border: 1px solid #ddd">
+                <code>data-max-date</code>
+              </td>
+              <td style="padding: 12px; border: 1px solid #ddd">YYYY-MM-DD</td>
+              <td style="padding: 12px; border: 1px solid #ddd">
+                "2024-12-31"
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Occupancy Limits</h3>
+        <table
+          style="width: 100%; border-collapse: collapse; margin-bottom: 20px"
+        >
+          <thead>
+            <tr style="background: #f8f9fa">
+              <th
+                style="padding: 12px; text-align: left; border: 1px solid #ddd"
+              >
+                Parameter
+              </th>
+              <th
+                style="padding: 12px; text-align: left; border: 1px solid #ddd"
+              >
+                Description
+              </th>
+              <th
+                style="padding: 12px; text-align: left; border: 1px solid #ddd"
+              >
+                Default
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding: 12px; border: 1px solid #ddd">
+                <code>data-max-rooms</code>
+              </td>
+              <td style="padding: 12px; border: 1px solid #ddd">
+                Maximum number of rooms
+              </td>
+              <td style="padding: 12px; border: 1px solid #ddd">5</td>
+            </tr>
+            <tr>
+              <td style="padding: 12px; border: 1px solid #ddd">
+                <code>data-max-adults</code>
+              </td>
+              <td style="padding: 12px; border: 1px solid #ddd">
+                Maximum adults per room
+              </td>
+              <td style="padding: 12px; border: 1px solid #ddd">4</td>
+            </tr>
+            <tr>
+              <td style="padding: 12px; border: 1px solid #ddd">
+                <code>data-max-children</code>
+              </td>
+              <td style="padding: 12px; border: 1px solid #ddd">
+                Maximum children per room
+              </td>
+              <td style="padding: 12px; border: 1px solid #ddd">4</td>
+            </tr>
+            <tr>
+              <td style="padding: 12px; border: 1px solid #ddd">
+                <code>data-min-child-age</code>
+              </td>
+              <td style="padding: 12px; border: 1px solid #ddd">
+                Minimum child age
+              </td>
+              <td style="padding: 12px; border: 1px solid #ddd">0</td>
+            </tr>
+            <tr>
+              <td style="padding: 12px; border: 1px solid #ddd">
+                <code>data-max-child-age</code>
+              </td>
+              <td style="padding: 12px; border: 1px solid #ddd">
+                Maximum child age
+              </td>
+              <td style="padding: 12px; border: 1px solid #ddd">17</td>
+            </tr>
+            <tr>
+              <td style="padding: 12px; border: 1px solid #ddd">
+                <code>data-default-adults</code>
+              </td>
+              <td style="padding: 12px; border: 1px solid #ddd">
+                Default number of adults
+              </td>
+              <td style="padding: 12px; border: 1px solid #ddd">2</td>
+            </tr>
+            <tr>
+              <td style="padding: 12px; border: 1px solid #ddd">
+                <code>data-default-children</code>
+              </td>
+              <td style="padding: 12px; border: 1px solid #ddd">
+                Default number of children
+              </td>
+              <td style="padding: 12px; border: 1px solid #ddd">0</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Other Options</h3>
+        <table style="width: 100%; border-collapse: collapse">
+          <thead>
+            <tr style="background: #f8f9fa">
+              <th
+                style="padding: 12px; text-align: left; border: 1px solid #ddd"
+              >
+                Parameter
+              </th>
+              <th
+                style="padding: 12px; text-align: left; border: 1px solid #ddd"
+              >
+                Description
+              </th>
+              <th
+                style="padding: 12px; text-align: left; border: 1px solid #ddd"
+              >
+                Default
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding: 12px; border: 1px solid #ddd">
+                <code>data-show-promo-code</code>
+              </td>
+              <td style="padding: 12px; border: 1px solid #ddd">
+                Show promo code field
+              </td>
+              <td style="padding: 12px; border: 1px solid #ddd">true</td>
+            </tr>
+            <tr>
+              <td style="padding: 12px; border: 1px solid #ddd">
+                <code>data-show-prices</code>
+              </td>
+              <td style="padding: 12px; border: 1px solid #ddd">Show prices</td>
+              <td style="padding: 12px; border: 1px solid #ddd">true</td>
+            </tr>
+            <tr>
+              <td style="padding: 12px; border: 1px solid #ddd">
+                <code>data-base-url</code>
+              </td>
+              <td style="padding: 12px; border: 1px solid #ddd">
+                Booking system URL
+              </td>
+              <td style="padding: 12px; border: 1px solid #ddd">
+                Default system URL
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <script src="dist/widget.min.js"></script>
+    <!-- <script>
+      // Initialize all widgets on the page
+      document.addEventListener('DOMContentLoaded', function() {
+        console.log('DOM loaded, checking for widget initialization...');
+        console.log('window.initializeWidgetSearch exists:', !!window.initializeWidgetSearch);
+        
+        if (window.initializeWidgetSearch) {
+          console.log('Initializing widgets...');
+          window.initializeWidgetSearch();
+          console.log('Widget initialization completed');
+        } else {
+          console.error('initializeWidgetSearch function not found!');
+        }
+      });
+    </script> -->
+  </body>
+</html>

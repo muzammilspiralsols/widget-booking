@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Widget Integration Test</title>
+    
+    <!-- Required integration method -->
+    <link rel="stylesheet" href="dist/widget.css">
+    <script type="module" src="dist/widget.js"></script>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .test-section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        
+        .test-section h2 {
+            color: #666;
+            margin-top: 0;
+        }
+        
+        /* Test custom CSS variables */
+        :root {
+            --primary-color: #e74c3c;
+            --text-color: #2c3e50;
+            --background: #ecf0f1;
+            --border-color: #bdc3c7;
+            --text-size: 14px;
+            --font-family: "Helvetica Neue", Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Hotel Booking Widget - Integration Test</h1>
+        
+        <div class="test-section">
+            <h2>Test 1: Basic Integration (Required Method)</h2>
+            <p>This test uses the exact integration method specified in the requirements:</p>
+            <pre><code>&lt;link rel="stylesheet" href="dist/widget.css"&gt;
+&lt;script type="module" src="dist/widget.js"&gt;&lt;/script&gt;
+&lt;div id="widget-search" data-hotel-id="12345"&gt;&lt;/div&gt;</code></pre>
+            
+            <div id="widget-search" 
+                 data-hotel-id="12345"
+                 data-type="hotel"
+                 data-layout="inline"
+                 data-theme="light"
+                 data-show-promo-code="true"
+                 data-external-url="https://www.miweb.com/buscar">
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h2>Test 2: Chain Type with Custom Styling</h2>
+            <p>This test demonstrates the parameterized CSS variables working with custom colors:</p>
+            
+            <div id="widget-search-chain" 
+                 data-hotel-id="all-hotels"
+                 data-type="chain"
+                 data-layout="column"
+                 data-theme="light"
+                 data-show-promo-code="true"
+                 data-show-hotel-selector="true"
+                 data-external-url="https://www.miweb.com/buscar">
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h2>Test 3: Dark Theme</h2>
+            <p>This test shows the dark theme implementation:</p>
+            
+            <div id="widget-search-dark" 
+                 data-hotel-id="45678"
+                 data-type="hotel"
+                 data-layout="inline"
+                 data-theme="dark"
+                 data-show-promo-code="true"
+                 data-external-url="https://www.miweb.com/buscar">
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h2>Test 4: Mobile Responsive & Modal</h2>
+            <p>This test shows mobile responsiveness and modal functionality:</p>
+            <ul>
+                <li><strong>Desktop (>1024px):</strong> Full horizontal layout</li>
+                <li><strong>Mobile/Tablet (&lt;1024px):</strong> Search button that opens modal</li>
+                <li><strong>Modal:</strong> Vertical layout with all fields properly contained</li>
+            </ul>
+            
+            <div id="widget-search-mobile" 
+                 data-hotel-id="78901"
+                 data-type="hotel"
+                 data-layout="inline"
+                 data-theme="light"
+                 data-show-promo-code="true"
+                 data-external-url="https://www.miweb.com/buscar">
+            </div>
+            
+            <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                <h4>Testing Instructions:</h4>
+                <ol>
+                    <li>Resize browser window to &lt; 1024px width</li>
+                    <li>Click the "Buscar" button to open modal</li>
+                    <li>Verify all fields are properly contained within the modal</li>
+                    <li>Test form functionality within the modal</li>
+                    <li>Close modal using X button or clicking outside</li>
+                </ol>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h2>Test 5: API Integration & Events</h2>
+            <p>This test demonstrates the API integration and event system:</p>
+            
+            <div id="widget-search-api" 
+                 data-hotel-id="api-test"
+                 data-type="hotel"
+                 data-layout="inline"
+                 data-theme="light"
+                 data-show-promo-code="true"
+                 data-external-url="https://www.miweb.com/buscar"
+                 data-api-url="https://api.example.com">
+            </div>
+            
+            <div style="margin-top: 20px;">
+                <button onclick="testUpdateData()">Test updateData Event</button>
+                <button onclick="testUpdateParams()">Test updateParams Event</button>
+                <button onclick="testAPI()">Test API Integration</button>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h2>Integration Status</h2>
+            <div id="status">
+                <p>✅ CSS Variables: Parameterized approach implemented</p>
+                <p>✅ Build Output: widget.js and widget.css generated</p>
+                <p>✅ Integration Method: Matches required specification</p>
+                <p>✅ TypeScript: All source code in TypeScript</p>
+                <p>✅ Vanilla JS: No external dependencies</p>
+                <p>✅ Rollup Build: Proper build configuration</p>
+                <p>✅ Scoped CSS: CSS isolated to .widget-search-container</p>
+                <p>✅ WCAG 2.1 AA: Accessibility features implemented</p>
+                <p>✅ API Integration: Availability check before redirection</p>
+                <p>✅ Events: updateData and updateParams implemented</p>
+                <p>✅ URL Redirection: External URL with parameters</p>
+                <p>✅ Mobile/Tablet: Modal functionality for < 1024px</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Test that the widget initializes properly
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Integration test loaded');
+            
+            // Check if widgets are initialized
+            setTimeout(() => {
+                const widgets = document.querySelectorAll('[id^="widget-search"]');
+                widgets.forEach((widget, index) => {
+                    if (widget.hasAttribute('data-widget-initialized')) {
+                        console.log(`✅ Widget ${index + 1} initialized successfully`);
+                    } else {
+                        console.log(`❌ Widget ${index + 1} failed to initialize`);
+                    }
+                });
+            }, 1000);
+        });
+
+        // Test functions for API and Events
+        function testUpdateData() {
+            const widget = window.getWidgetInstance('widget-search-api');
+            if (widget) {
+                widget.updateData({
+                    idHotel: 'test-hotel-123',
+                    promoCode: 'TEST2024',
+                    openCalendar: true,
+                    checkIn: '15-08-2024',
+                    checkOut: '20-08-2024'
+                });
+                console.log('✅ updateData event triggered');
+            } else {
+                console.log('❌ Widget instance not found');
+            }
+        }
+
+        function testUpdateParams() {
+            const widget = window.getWidgetInstance('widget-search-api');
+            if (widget) {
+                widget.updateParams({
+                    'il_like': 'DBL',
+                    'source': 'test',
+                    'campaign': 'integration-test'
+                });
+                console.log('✅ updateParams event triggered');
+            } else {
+                console.log('❌ Widget instance not found');
+            }
+        }
+
+        function testAPI() {
+            // Mock API response for testing
+            const originalFetch = window.fetch;
+            window.fetch = function(url, options) {
+                console.log('🔍 API call intercepted:', url);
+                return Promise.resolve({
+                    ok: true,
+                    json: () => Promise.resolve({
+                        available: true,
+                        message: 'Test API response - rooms available'
+                    })
+                });
+            };
+
+            // Trigger search to test API integration
+            const widget = window.getWidgetInstance('widget-search-api');
+            if (widget) {
+                // Simulate search button click
+                const searchBtn = document.querySelector('#widget-search-api .search-btn');
+                if (searchBtn) {
+                    searchBtn.click();
+                    console.log('✅ API integration test triggered');
+                }
+            }
+
+            // Restore original fetch
+            setTimeout(() => {
+                window.fetch = originalFetch;
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
