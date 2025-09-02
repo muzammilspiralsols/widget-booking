@@ -178,6 +178,12 @@ class WidgetSearch {
     // Store additional parameters for URL building
     this.container.setAttribute("data-additional-params", JSON.stringify(params));
     
+    // Also update the widget state directly to ensure it's cleared
+    const widgetState = (this as any).__state;
+    if (widgetState) {
+      widgetState.additionalParams = { ...params };
+    }
+    
     // Dispatch custom event to notify the widget
     const event = new CustomEvent("widgetUpdateParams", {
       detail: params,
