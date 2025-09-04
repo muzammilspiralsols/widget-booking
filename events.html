@@ -1,610 +1,921 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hotel Booking Widget - Events Demo</title>
-    <link rel="stylesheet" href="dist/widget.css">
+    <link rel="stylesheet" href="dist/widget.css" />
     <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #f5f5f5;
-        }
+      /* Blue/Yellow Color Theme for Widget */
+      :root {
+        --widget-primary-color: #007bff !important;
+        --widget-primary-hover: #0056b3 !important;
+        --widget-warning-color: #ffc107 !important;
+        --widget-focus-color: #007bff !important;
+      }
+      
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          sans-serif;
+        margin: 0;
+        padding: 20px;
+        background-color: #f5f5f5;
+      }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
 
-        h1 {
-            color: #333;
-            margin-bottom: 30px;
-            text-align: center;
-        }
+      h1 {
+        color: #333;
+        margin-bottom: 30px;
+        text-align: center;
+      }
 
-        .demo-section {
-            margin-bottom: 40px;
-            padding: 20px;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-        }
+      .demo-section {
+        margin-bottom: 40px;
+        padding: 20px;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+      }
 
-        .demo-section h2 {
-            color: #555;
-            margin-top: 0;
-            margin-bottom: 15px;
-        }
+      .demo-section h2 {
+        color: #555;
+        margin-top: 0;
+        margin-bottom: 15px;
+      }
 
-        .demo-section p {
-            color: #666;
-            margin-bottom: 20px;
-        }
+      .demo-section p {
+        color: #666;
+        margin-bottom: 20px;
+      }
 
-        .widget-container {
-            margin: 20px 0;
-        }
+      .widget-container {
+        margin: 20px 0;
+      }
 
-        .event-controls {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin: 20px 0;
-        }
+      .event-controls {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+        margin: 20px 0;
+      }
 
-        .event-button {
-            background: #541351;
-            color: white;
-            border: none;
-            padding: 12px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-            transition: background-color 0.2s;
-        }
+      .event-button {
+        background: #541351;
+        color: white;
+        border: none;
+        padding: 12px 16px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        transition: background-color 0.2s;
+      }
 
-        .event-button:hover {
-            background: #30062e;
-        }
+      .event-button:hover {
+        background: #30062e;
+      }
 
-        .event-button.secondary {
-            background: #6c757d;
-        }
+      .event-button.secondary {
+        background: #6c757d;
+      }
 
-        .event-button.secondary:hover {
-            background: #545b62;
-        }
+      .event-button.secondary:hover {
+        background: #545b62;
+      }
 
-        .event-button.success {
-            background: #28a745;
-        }
+      .event-button.success {
+        background: #28a745;
+      }
 
-        .event-button.success:hover {
-            background: #1e7e34;
-        }
+      .event-button.success:hover {
+        background: #1e7e34;
+      }
 
-        .event-button.warning {
-            background: #ffc107;
-            color: #212529;
-        }
+      .event-button.warning {
+        background: #ffc107;
+        color: #212529;
+      }
 
-        .event-button.warning:hover {
-            background: #e0a800;
-        }
+      .event-button.warning:hover {
+        background: #e0a800;
+      }
 
-        .event-group {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 6px;
-            margin: 15px 0;
-        }
+      .event-group {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 6px;
+        margin: 15px 0;
+      }
 
-        .event-group h3 {
-            margin-top: 0;
-            margin-bottom: 10px;
-            color: #495057;
-            font-size: 16px;
-        }
+      .event-group h3 {
+        margin-top: 0;
+        margin-bottom: 10px;
+        color: #495057;
+        font-size: 16px;
+      }
 
-        .code-example {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 4px;
-            overflow-x: auto;
-            font-size: 14px;
-            margin: 15px 0;
-            border-left: 4px solid #541351;
-        }
+      .code-example {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 4px;
+        overflow-x: auto;
+        font-size: 14px;
+        margin: 15px 0;
+        border-left: 4px solid #541351;
+      }
 
-        .code-example code {
-            color: #e83e8c;
-            font-family: 'Courier New', monospace;
-        }
+      .code-example code {
+        color: #e83e8c;
+        font-family: "Courier New", monospace;
+      }
 
-        .status-message {
-            background: #d4edda;
-            color: #155724;
-            padding: 10px 15px;
-            border-radius: 4px;
-            margin: 10px 0;
-            border: 1px solid #c3e6cb;
-        }
+      .status-message {
+        background: #d4edda;
+        color: #155724;
+        padding: 10px 15px;
+        border-radius: 4px;
+        margin: 10px 0;
+        border: 1px solid #c3e6cb;
+      }
 
-        .status-message.error {
-            background: #f8d7da;
-            color: #721c24;
-            border-color: #f5c6cb;
-        }
+      .status-message.error {
+        background: #f8d7da;
+        color: #721c24;
+        border-color: #f5c6cb;
+      }
 
-        .status-message.info {
-            background: #d1ecf1;
-            color: #0c5460;
-            border-color: #bee5eb;
-        }
+      .status-message.info {
+        background: #d1ecf1;
+        color: #0c5460;
+        border-color: #bee5eb;
+      }
 
-        pre {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 4px;
-            overflow-x: auto;
-            font-size: 14px;
-            margin: 15px 0;
-        }
+      pre {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 4px;
+        overflow-x: auto;
+        font-size: 14px;
+        margin: 15px 0;
+      }
 
-        code {
-            color: #e83e8c;
-        }
+      code {
+        color: #e83e8c;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <h1>🏨 Hotel Booking Widget - Events Demo</h1>
-        
-        <div class="status-message info">
-            <strong>📋 Instructions:</strong> Use the buttons below to programmatically control the widget. This demonstrates how to integrate the widget with your own application logic.
+      <h1>🏨 Hotel Booking Widget - Events Demo</h1>
+
+      <div class="status-message info">
+        <strong>📋 Instructions:</strong> Use the buttons below to
+        programmatically control the widget. This demonstrates how to integrate
+        the widget with your own application logic.
+      </div>
+
+      <!-- Widget Container -->
+      <div class="demo-section">
+        <h2>🎯 Interactive Widget</h2>
+        <p>
+          This widget responds to programmatic events. Try the buttons below to
+          see how you can control it from your application:
+        </p>
+
+        <div class="widget-container">
+          <div
+            id="widget-search-events"
+            data-book-id="events-demo"
+            data-type="chain"
+            data-currency="EUR"
+            data-locale="es-ES"
+            data-layout="inline"
+            data-default-adults="2"
+            data-default-children="0"
+            data-theme="light"
+            data-show-hotel-selector="true"
+            data-show-promo-code="true"
+          ></div>
+        </div>
+      </div>
+
+      <!-- Hotel Selection Events -->
+      <div class="demo-section">
+        <h2>🏨 Hotel Selection Events</h2>
+        <p>Programmatically select different hotels in the widget:</p>
+
+        <div class="event-group">
+          <h3>Select Specific Hotels</h3>
+          <div class="event-controls">
+            <button
+              class="event-button"
+              onclick="selectHotel('playa-garden-selection-hotel-spa')"
+            >
+              🏖️ Playa Garden Selection
+            </button>
+            <button
+              class="event-button"
+              onclick="selectHotel('hotel-rural-montana')"
+            >
+              🏔️ Hotel Rural Montaña
+            </button>
+            <button
+              class="event-button"
+              onclick="selectHotel('urban-boutique-hotel')"
+            >
+              🏙️ Urban Boutique Hotel
+            </button>
+            <button
+              class="event-button secondary"
+              onclick="selectHotel('all-hotels')"
+            >
+              🌐 All Hotels
+            </button>
+          </div>
         </div>
 
-        <!-- Widget Container -->
-        <div class="demo-section">
-            <h2>🎯 Interactive Widget</h2>
-            <p>This widget responds to programmatic events. Try the buttons below to see how you can control it from your application:</p>
-            
-            <div class="widget-container">
-                <div
-                    id="widget-search-events"
-                    data-book-id="events-demo"
-                    data-type="chain"
-                    data-currency="EUR"
-                    data-locale="es-ES"
-                    data-layout="inline"
-                    data-default-adults="2"
-                    data-default-children="0"
-                    data-theme="light"
-                    data-show-hotel-selector="true"
-                    data-show-promo-code="true"
-                ></div>
-            </div>
+        <div class="code-example">
+          <strong>JavaScript Code:</strong><br />
+          <code
+            >widget.updateData({ idHotel: 'playa-garden-selection-hotel-spa'
+            });</code
+          >
+        </div>
+      </div>
+
+      <!-- Date Selection Events -->
+      <div class="demo-section">
+        <h2>📅 Date Selection Events</h2>
+        <p>Set check-in and check-out dates programmatically:</p>
+
+        <div class="event-group">
+          <h3>Quick Date Presets</h3>
+          <div class="event-controls">
+            <button
+              class="event-button success"
+              onclick="setDates('15-01-2025', '20-01-2025')"
+            >
+              🏖️ Weekend Getaway (Jan 15-20)
+            </button>
+            <button
+              class="event-button success"
+              onclick="setDates('01-02-2025', '08-02-2025')"
+            >
+              🏔️ Week Vacation (Feb 1-8)
+            </button>
+            <button
+              class="event-button success"
+              onclick="setDates('14-02-2025', '16-02-2025')"
+            >
+              💕 Valentine's Weekend (Feb 14-16)
+            </button>
+            <button class="event-button warning" onclick="openCalendar()">
+              📅 Open Calendar
+            </button>
+          </div>
         </div>
 
-        <!-- Hotel Selection Events -->
-        <div class="demo-section">
-            <h2>🏨 Hotel Selection Events</h2>
-            <p>Programmatically select different hotels in the widget:</p>
-            
-            <div class="event-group">
-                <h3>Select Specific Hotels</h3>
-                <div class="event-controls">
-                    <button class="event-button" onclick="selectHotel('playa-garden-selection-hotel-spa')">
-                        🏖️ Playa Garden Selection
-                    </button>
-                    <button class="event-button" onclick="selectHotel('hotel-rural-montana')">
-                        🏔️ Hotel Rural Montaña
-                    </button>
-                    <button class="event-button" onclick="selectHotel('urban-boutique-hotel')">
-                        🏙️ Urban Boutique Hotel
-                    </button>
-                    <button class="event-button secondary" onclick="selectHotel('all-hotels')">
-                        🌐 All Hotels
-                    </button>
-                </div>
-            </div>
+        <div class="code-example">
+          <strong>JavaScript Code:</strong><br />
+          <code
+            >widget.updateData({ checkIn: '15-01-2025', checkOut: '20-01-2025'
+            });</code
+          >
+        </div>
+      </div>
 
-            <div class="code-example">
-                <strong>JavaScript Code:</strong><br>
-                <code>widget.updateData({ idHotel: 'playa-garden-selection-hotel-spa' });</code>
-            </div>
+      <!-- Promo Code Events -->
+      <div class="demo-section">
+        <h2>🎫 Promo Code Events</h2>
+        <p>Set promotional codes programmatically:</p>
+
+        <div class="event-group">
+          <h3>Promo Code Examples</h3>
+          <div class="event-controls">
+            <button class="event-button" onclick="setPromoCode('WELCOME2025')">
+              🎉 WELCOME2025
+            </button>
+            <button class="event-button" onclick="setPromoCode('EARLYBIRD')">
+              🐦 EARLYBIRD
+            </button>
+            <button class="event-button" onclick="setPromoCode('FAMILY10')">
+              👨‍👩‍👧‍👦 FAMILY10
+            </button>
+            <button class="event-button secondary" onclick="setPromoCode('')">
+              🗑️ Clear Promo
+            </button>
+          </div>
         </div>
 
-        <!-- Date Selection Events -->
-        <div class="demo-section">
-            <h2>📅 Date Selection Events</h2>
-            <p>Set check-in and check-out dates programmatically:</p>
-            
-            <div class="event-group">
-                <h3>Quick Date Presets</h3>
-                <div class="event-controls">
-                    <button class="event-button success" onclick="setDates('15-01-2025', '20-01-2025')">
-                        🏖️ Weekend Getaway (Jan 15-20)
-                    </button>
-                    <button class="event-button success" onclick="setDates('01-02-2025', '08-02-2025')">
-                        🏔️ Week Vacation (Feb 1-8)
-                    </button>
-                    <button class="event-button success" onclick="setDates('14-02-2025', '16-02-2025')">
-                        💕 Valentine's Weekend (Feb 14-16)
-                    </button>
-                    <button class="event-button warning" onclick="openCalendar()">
-                        📅 Open Calendar
-                    </button>
-                </div>
-            </div>
+        <div class="code-example">
+          <strong>JavaScript Code:</strong><br />
+          <code>widget.updateData({ promoCode: 'WELCOME2025' });</code>
+        </div>
+      </div>
 
-            <div class="code-example">
-                <strong>JavaScript Code:</strong><br>
-                <code>widget.updateData({ 
-    checkIn: '15-01-2025', 
-    checkOut: '20-01-2025' 
-});</code>
-            </div>
+      <!-- Additional Parameters -->
+      <div class="demo-section">
+        <h2>⚙️ Additional Parameters</h2>
+        <p>Add custom parameters that will be included in the booking URL:</p>
+
+        <div class="event-group">
+          <h3>Custom Parameters</h3>
+          <div class="event-controls">
+            <button
+              class="event-button"
+              onclick="addCustomParams({ source: 'website', campaign: 'demo' })"
+            >
+              📊 Add Tracking Params
+            </button>
+            <button
+              class="event-button"
+              onclick="addCustomParams({ utm_source: 'widget_demo', utm_medium: 'events' })"
+            >
+              📈 Add UTM Params
+            </button>
+            <button
+              class="event-button"
+              onclick="addCustomParams({ affiliate: 'partner123', discount: '5' })"
+            >
+              🤝 Add Affiliate Params
+            </button>
+            <button
+              class="event-button secondary"
+              onclick="clearCustomParams()"
+            >
+              🗑️ Clear All Params
+            </button>
+          </div>
         </div>
 
-        <!-- Promo Code Events -->
-        <div class="demo-section">
-            <h2>🎫 Promo Code Events</h2>
-            <p>Set promotional codes programmatically:</p>
-            
-            <div class="event-group">
-                <h3>Promo Code Examples</h3>
-                <div class="event-controls">
-                    <button class="event-button" onclick="setPromoCode('WELCOME2025')">
-                        🎉 WELCOME2025
-                    </button>
-                    <button class="event-button" onclick="setPromoCode('EARLYBIRD')">
-                        🐦 EARLYBIRD
-                    </button>
-                    <button class="event-button" onclick="setPromoCode('FAMILY10')">
-                        👨‍👩‍👧‍👦 FAMILY10
-                    </button>
-                    <button class="event-button secondary" onclick="setPromoCode('')">
-                        🗑️ Clear Promo
-                    </button>
-                </div>
-            </div>
-
-            <div class="code-example">
-                <strong>JavaScript Code:</strong><br>
-                <code>widget.updateData({ promoCode: 'WELCOME2025' });</code>
-            </div>
+        <!-- Custom Parameter Input -->
+        <div class="event-group">
+          <h3>Add Your Own Parameters</h3>
+          <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 15px; flex-wrap: wrap;">
+            <input
+              type="text"
+              id="custom-param-key"
+              placeholder="Parameter key (e.g., weather)"
+              style="
+                padding: 8px 12px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                font-size: 14px;
+                min-width: 150px;
+                flex: 1;
+              "
+            />
+            <input
+              type="text"
+              id="custom-param-value"
+              placeholder="Parameter value (e.g., sunny)"
+              style="
+                padding: 8px 12px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                font-size: 14px;
+                min-width: 150px;
+                flex: 1;
+              "
+            />
+            <button
+              class="event-button"
+              onclick="addSingleCustomParam()"
+              style="min-width: 120px;"
+            >
+              ➕ Add Parameter
+            </button>
+          </div>
+          <div style="margin-bottom: 15px;">
+            <button
+              class="event-button secondary"
+              onclick="addRawParameters()"
+            >
+              📝 Add Raw Parameters (comma-separated)
+            </button>
+          </div>
         </div>
 
-        <!-- Additional Parameters -->
-        <div class="demo-section">
-            <h2>⚙️ Additional Parameters</h2>
-            <p>Add custom parameters that will be included in the booking URL:</p>
-            
-            <div class="event-group">
-                <h3>Custom Parameters</h3>
-                <div class="event-controls">
-                    <button class="event-button" onclick="addCustomParams({ source: 'website', campaign: 'demo' })">
-                        📊 Add Tracking Params
-                    </button>
-                    <button class="event-button" onclick="addCustomParams({ utm_source: 'widget_demo', utm_medium: 'events' })">
-                        📈 Add UTM Params
-                    </button>
-                    <button class="event-button" onclick="addCustomParams({ affiliate: 'partner123', discount: '5' })">
-                        🤝 Add Affiliate Params
-                    </button>
-                    <button class="event-button secondary" onclick="clearCustomParams()">
-                        🗑️ Clear All Params
-                    </button>
-                </div>
-            </div>
-
-            <div class="code-example">
-                <strong>JavaScript Code:</strong><br>
-                <code>widget.updateParams({ 
-    source: 'website', 
-    campaign: 'demo' 
-});</code>
-            </div>
+        <!-- Current Parameters Display -->
+        <div class="event-group">
+          <h3>Current Parameters</h3>
+          <div id="current-params-display" style="
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            border-left: 4px solid #007bff;
+            margin-bottom: 15px;
+            font-family: monospace;
+            font-size: 14px;
+            min-height: 50px;
+          ">
+            <div style="color: #6c757d;">No parameters added yet...</div>
+          </div>
+          <button
+            class="event-button secondary"
+            onclick="refreshCurrentParams()"
+          >
+            🔄 Refresh Display
+          </button>
         </div>
 
-        <!-- Modal Control -->
-        <div class="demo-section">
-            <h2>🪟 Modal Control</h2>
-            <p>Control the widget modal programmatically:</p>
-            
-            <div class="event-group">
-                <h3>Modal Actions</h3>
-                <div class="event-controls">
-                    <button class="event-button" onclick="openWidgetModal()">
-                        🔍 Open Modal
-                    </button>
-                    <button class="event-button secondary" onclick="closeWidgetModal()">
-                        ❌ Close Modal
-                    </button>
-                </div>
-            </div>
+        <div class="code-example">
+          <strong>JavaScript Code:</strong><br />
+          <code
+            >widget.updateParams({ source: 'website', campaign: 'demo' });</code
+          >
+        </div>
+      </div>
 
-            <div class="code-example">
-                <strong>JavaScript Code:</strong><br>
-                <code>widget.openModal(); // Open modal<br>
-widget.closeModal(); // Close modal</code>
-            </div>
+      <!-- Modal Control -->
+      <div class="demo-section">
+        <h2>🪟 Modal Control</h2>
+        <p>Control the widget modal programmatically:</p>
+
+        <div class="event-group">
+          <h3>Modal Actions</h3>
+          <div class="event-controls">
+            <button class="event-button" onclick="openWidgetModal()">
+              🔍 Open Modal
+            </button>
+            <button class="event-button secondary" onclick="closeWidgetModal()">
+              ❌ Close Modal
+            </button>
+          </div>
         </div>
 
-        <!-- Event Log -->
-        <div class="demo-section">
-            <h2>📝 Event Log</h2>
-            <p>Real-time log of widget events and interactions:</p>
-            <div id="event-log" style="background: #f8f9fa; padding: 15px; border-radius: 4px; max-height: 200px; overflow-y: auto; font-family: monospace; font-size: 12px;">
-                <div style="color: #6c757d;">Waiting for events...</div>
-            </div>
+        <div class="code-example">
+          <strong>JavaScript Code:</strong><br />
+          <code
+            >widget.openModal(); // Open modal<br />
+            widget.closeModal(); // Close modal</code
+          >
+        </div>
+      </div>
+
+      <!-- Event Log -->
+      <div class="demo-section">
+        <h2>📝 Event Log</h2>
+        <p>Real-time log of widget events and interactions:</p>
+        <div
+          id="event-log"
+          style="
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            max-height: 200px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 12px;
+          "
+        >
+          <div style="color: #6c757d">Waiting for events...</div>
+        </div>
+      </div>
+
+      <!-- Integration Examples -->
+      <div class="demo-section">
+        <h2>🔗 Integration Examples</h2>
+        <p>
+          Here are some real-world examples of how to integrate these events:
+        </p>
+
+        <div class="code-example">
+          <strong>1. Hotel Selection from External List:</strong><br />
+          <code
+            >// When user clicks on a hotel card
+            document.querySelectorAll('.hotel-card').forEach(card => {
+            card.addEventListener('click', () => { const hotelId =
+            card.dataset.hotelId; widget.updateData({ idHotel: hotelId });
+            showMessage('Hotel selected: ' + card.dataset.hotelName); });
+            });</code
+          >
         </div>
 
-        <!-- Integration Examples -->
-        <div class="demo-section">
-            <h2>🔗 Integration Examples</h2>
-            <p>Here are some real-world examples of how to integrate these events:</p>
-            
-            <div class="code-example">
-                <strong>1. Hotel Selection from External List:</strong><br>
-                <code>// When user clicks on a hotel card
-document.querySelectorAll('.hotel-card').forEach(card => {
-    card.addEventListener('click', () => {
-        const hotelId = card.dataset.hotelId;
-        widget.updateData({ idHotel: hotelId });
-        showMessage('Hotel selected: ' + card.dataset.hotelName);
-    });
-});</code>
-            </div>
-
-            <div class="code-example">
-                <strong>2. Date Selection from Calendar Widget:</strong><br>
-                <code>// When user selects dates in your calendar
-function onDateSelected(checkIn, checkOut) {
-    widget.updateData({ 
-        checkIn: formatDate(checkIn, 'DD-MM-YYYY'),
-        checkOut: formatDate(checkOut, 'DD-MM-YYYY')
-    });
-    widget.openModal(); // Show the booking widget
-}</code>
-            </div>
-
-            <div class="code-example">
-                <strong>3. Promo Code from Marketing Campaign:</strong><br>
-                <code>// Apply promo code from URL parameter
-const urlParams = new URLSearchParams(window.location.search);
-const promoCode = urlParams.get('promo');
-if (promoCode) {
-    widget.updateData({ promoCode: promoCode });
-    showMessage('Promo code applied: ' + promoCode);
-}</code>
-            </div>
+        <div class="code-example">
+          <strong>2. Date Selection from Calendar Widget:</strong><br />
+          <code
+            >// When user selects dates in your calendar function
+            onDateSelected(checkIn, checkOut) { widget.updateData({ checkIn:
+            formatDate(checkIn, 'DD-MM-YYYY'), checkOut: formatDate(checkOut,
+            'DD-MM-YYYY') }); widget.openModal(); // Show the booking widget
+            }</code
+          >
         </div>
+
+        <div class="code-example">
+          <strong>3. Promo Code from Marketing Campaign:</strong><br />
+          <code
+            >// Apply promo code from URL parameter const urlParams = new
+            URLSearchParams(window.location.search); const promoCode =
+            urlParams.get('promo'); if (promoCode) { widget.updateData({
+            promoCode: promoCode }); showMessage('Promo code applied: ' +
+            promoCode); }</code
+          >
+        </div>
+      </div>
     </div>
 
     <!-- Widget Script -->
     <script src="dist/widget.min.js"></script>
-    
+
     <script>
-        // Global widget instance
-        let widget = null;
-        
-        // Initialize widget when DOM is loaded
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOM loaded, initializing widget...');
-            
-            if (window.initializeWidgetSearch) {
-                window.initializeWidgetSearch();
-                
-                // Wait a bit for initialization to complete
-                setTimeout(() => {
-                    // Get the widget instance using the global function
-                    widget = window.getWidgetInstance('widget-search-events');
-                    
-                    // Fallback: try to get from container directly
-                    if (!widget) {
-                        const container = document.getElementById('widget-search-events');
-                        if (container && container.__widgetInstance) {
-                            widget = container.__widgetInstance;
-                        }
-                    }
-                    
-                    if (widget) {
-                        logEvent('Widget initialized successfully');
-                    } else {
-                        logEvent('Widget initialized but instance not found', 'error');
-                    }
-                }, 100);
+      // Global widget instance
+      let widget = null;
+
+      // Initialize widget when DOM is loaded
+      document.addEventListener("DOMContentLoaded", function () {
+        console.log("DOM loaded, initializing widget...");
+
+        if (window.initializeWidgetSearch) {
+          window.initializeWidgetSearch();
+
+          // Wait a bit for initialization to complete
+          setTimeout(() => {
+            // Get the widget instance using the global function
+            widget = window.getWidgetInstance("widget-search-events");
+
+            // Fallback: try to get from container directly
+            if (!widget) {
+              const container = document.getElementById("widget-search-events");
+              if (container && container.__widgetInstance) {
+                widget = container.__widgetInstance;
+              }
+            }
+
+            if (widget) {
+              logEvent("Widget initialized successfully");
             } else {
-                logEvent('initializeWidgetSearch function not found!', 'error');
+              logEvent("Widget initialized but instance not found", "error");
             }
-        });
+          }, 100);
+        } else {
+          logEvent("initializeWidgetSearch function not found!", "error");
+        }
+      });
 
-        // Event logging function
-        function logEvent(message, type = 'info') {
-            const log = document.getElementById('event-log');
-            const timestamp = new Date().toLocaleTimeString();
-            const logEntry = document.createElement('div');
-            logEntry.style.color = type === 'error' ? '#dc3545' : type === 'success' ? '#28a745' : '#6c757d';
-            logEntry.textContent = `[${timestamp}] ${message}`;
-            log.appendChild(logEntry);
-            log.scrollTop = log.scrollHeight;
+      // Event logging function
+      function logEvent(message, type = "info") {
+        const log = document.getElementById("event-log");
+        const timestamp = new Date().toLocaleTimeString();
+        const logEntry = document.createElement("div");
+        logEntry.style.color =
+          type === "error"
+            ? "#dc3545"
+            : type === "success"
+            ? "#28a745"
+            : "#6c757d";
+        logEntry.textContent = `[${timestamp}] ${message}`;
+        log.appendChild(logEntry);
+        log.scrollTop = log.scrollHeight;
+      }
+
+      // Hotel selection functions
+      function selectHotel(hotelId) {
+        if (!widget) {
+          logEvent("Widget not initialized", "error");
+          return;
         }
 
-        // Hotel selection functions
-        function selectHotel(hotelId) {
-            if (!widget) {
-                logEvent('Widget not initialized', 'error');
-                return;
-            }
-            
+        try {
+          widget.updateData({ idHotel: hotelId });
+          const hotelName = getHotelName(hotelId);
+          logEvent(`Hotel selected: ${hotelName} (${hotelId})`, "success");
+          showMessage(`Hotel selected: ${hotelName}`);
+        } catch (error) {
+          logEvent(`Error selecting hotel: ${error.message}`, "error");
+        }
+      }
+
+      function getHotelName(hotelId) {
+        const hotelNames = {
+          "playa-garden-selection-hotel-spa":
+            "Playa Garden Selection Hotel & Spa",
+          "hotel-rural-montana": "Hotel Rural Montaña",
+          "urban-boutique-hotel": "Urban Boutique Hotel",
+          "all-hotels": "All Hotels",
+        };
+        return hotelNames[hotelId] || hotelId;
+      }
+
+      // Date selection functions
+      function setDates(checkIn, checkOut) {
+        if (!widget) {
+          logEvent("Widget not initialized", "error");
+          return;
+        }
+
+        try {
+          widget.updateData({
+            checkIn: checkIn,
+            checkOut: checkOut,
+          });
+          logEvent(`Dates set: ${checkIn} to ${checkOut}`, "success");
+          showMessage(`Dates set: ${checkIn} to ${checkOut}`);
+        } catch (error) {
+          logEvent(`Error setting dates: ${error.message}`, "error");
+        }
+      }
+
+      function openCalendar() {
+        if (!widget) {
+          logEvent("Widget not initialized", "error");
+          return;
+        }
+
+        try {
+          logEvent("Attempting to open calendar...", "info");
+          widget.updateData({ openCalendar: true });
+          logEvent("Calendar opened successfully", "success");
+        } catch (error) {
+          logEvent(`Error opening calendar: ${error.message}`, "error");
+          console.error("Calendar open error:", error);
+        }
+      }
+
+      // Promo code functions
+      function setPromoCode(promoCode) {
+        if (!widget) {
+          logEvent("Widget not initialized", "error");
+          return;
+        }
+
+        try {
+          logEvent(
+            `Attempting to ${promoCode ? "set" : "clear"} promo code...`,
+            "info"
+          );
+          widget.updateData({ promoCode: promoCode });
+          if (promoCode) {
+            logEvent(`Promo code set: ${promoCode}`, "success");
+            showMessage(`Promo code applied: ${promoCode}`);
+          } else {
+            logEvent("Promo code cleared", "success");
+            showMessage("Promo code cleared");
+          }
+        } catch (error) {
+          logEvent(`Error setting promo code: ${error.message}`, "error");
+          console.error("Promo code error:", error);
+        }
+      }
+
+      // Custom parameters functions
+      function addCustomParams(params) {
+        if (!widget) {
+          logEvent("Widget not initialized", "error");
+          return;
+        }
+
+        try {
+          // Get existing parameters first
+          const container = document.getElementById("widget-search-events");
+          const additionalParamsAttr = container.getAttribute("data-additional-params");
+          let existingParams = {};
+          
+          if (additionalParamsAttr) {
             try {
-                widget.updateData({ idHotel: hotelId });
-                const hotelName = getHotelName(hotelId);
-                logEvent(`Hotel selected: ${hotelName} (${hotelId})`, 'success');
-                showMessage(`Hotel selected: ${hotelName}`);
+              existingParams = JSON.parse(additionalParamsAttr);
             } catch (error) {
-                logEvent(`Error selecting hotel: ${error.message}`, 'error');
+              console.warn("Error parsing existing params:", error);
             }
+          }
+          
+          // Merge new params with existing ones
+          const mergedParams = { ...existingParams, ...params };
+          widget.updateParams(mergedParams);
+          const paramString = Object.entries(params)
+            .map(([key, value]) => `${key}=${value}`)
+            .join(", ");
+          logEvent(`Custom params added: ${paramString}`, "success");
+          showMessage(`Parameters added: ${paramString}`);
+          
+          // Refresh display
+          refreshCurrentParams();
+        } catch (error) {
+          logEvent(`Error adding custom params: ${error.message}`, "error");
+        }
+      }
+
+      function clearCustomParams() {
+        if (!widget) {
+          logEvent("Widget not initialized", "error");
+          return;
         }
 
-        function getHotelName(hotelId) {
-            const hotelNames = {
-                'playa-garden-selection-hotel-spa': 'Playa Garden Selection Hotel & Spa',
-                'hotel-rural-montana': 'Hotel Rural Montaña',
-                'urban-boutique-hotel': 'Urban Boutique Hotel',
-                'all-hotels': 'All Hotels'
-            };
-            return hotelNames[hotelId] || hotelId;
+        try {
+          widget.updateParams({});
+          logEvent("Custom params cleared", "success");
+          showMessage("All custom parameters cleared");
+          
+          // Refresh display
+          refreshCurrentParams();
+        } catch (error) {
+          logEvent(`Error clearing custom params: ${error.message}`, "error");
+        }
+      }
+
+      // Add single custom parameter from input fields
+      function addSingleCustomParam() {
+        if (!widget) {
+          logEvent("Widget not initialized", "error");
+          return;
         }
 
-        // Date selection functions
-        function setDates(checkIn, checkOut) {
-            if (!widget) {
-                logEvent('Widget not initialized', 'error');
-                return;
-            }
-            
+        const keyInput = document.getElementById("custom-param-key");
+        const valueInput = document.getElementById("custom-param-value");
+        
+        const key = keyInput.value.trim();
+        const value = valueInput.value.trim();
+
+        if (!key || !value) {
+          showMessage("Please enter both key and value", "error");
+          return;
+        }
+
+        try {
+          // Get existing parameters first
+          const container = document.getElementById("widget-search-events");
+          const additionalParamsAttr = container.getAttribute("data-additional-params");
+          let existingParams = {};
+          
+          if (additionalParamsAttr) {
             try {
-                widget.updateData({ 
-                    checkIn: checkIn, 
-                    checkOut: checkOut 
-                });
-                logEvent(`Dates set: ${checkIn} to ${checkOut}`, 'success');
-                showMessage(`Dates set: ${checkIn} to ${checkOut}`);
+              existingParams = JSON.parse(additionalParamsAttr);
             } catch (error) {
-                logEvent(`Error setting dates: ${error.message}`, 'error');
+              console.warn("Error parsing existing params:", error);
             }
+          }
+          
+          // Add new parameter to existing ones
+          const newParams = { ...existingParams, [key]: value };
+          widget.updateParams(newParams);
+          logEvent(`Custom param added: ${key}=${value}`, "success");
+          showMessage(`Parameter added: ${key}=${value}`);
+          
+          // Clear inputs
+          keyInput.value = "";
+          valueInput.value = "";
+          
+          // Refresh display
+          refreshCurrentParams();
+        } catch (error) {
+          logEvent(`Error adding custom param: ${error.message}`, "error");
+        }
+      }
+
+      // Add raw parameters (comma-separated key=value pairs)
+      function addRawParameters() {
+        if (!widget) {
+          logEvent("Widget not initialized", "error");
+          return;
         }
 
-        function openCalendar() {
-            if (!widget) {
-                logEvent('Widget not initialized', 'error');
-                return;
-            }
-            
+        const rawInput = prompt("Enter parameters as key=value pairs, separated by commas:\nExample: weather=sunny, market=cycling, season=summer");
+        
+        if (!rawInput || !rawInput.trim()) {
+          return;
+        }
+
+        try {
+          // Get existing parameters first
+          const container = document.getElementById("widget-search-events");
+          const additionalParamsAttr = container.getAttribute("data-additional-params");
+          let existingParams = {};
+          
+          if (additionalParamsAttr) {
             try {
-                logEvent('Attempting to open calendar...', 'info');
-                widget.updateData({ openCalendar: true });
-                logEvent('Calendar opened successfully', 'success');
+              existingParams = JSON.parse(additionalParamsAttr);
             } catch (error) {
-                logEvent(`Error opening calendar: ${error.message}`, 'error');
-                console.error('Calendar open error:', error);
+              console.warn("Error parsing existing params:", error);
             }
+          }
+          
+          const newParams = { ...existingParams };
+          const pairs = rawInput.split(',').map(pair => pair.trim());
+          
+          pairs.forEach(pair => {
+            const [key, value] = pair.split('=').map(s => s.trim());
+            if (key && value) {
+              newParams[key] = value;
+            }
+          });
+
+          if (Object.keys(newParams).length === Object.keys(existingParams).length) {
+            showMessage("No valid parameters found. Use format: key=value, key2=value2", "error");
+            return;
+          }
+
+          widget.updateParams(newParams);
+          const paramString = Object.entries(newParams)
+            .filter(([key]) => !existingParams.hasOwnProperty(key))
+            .map(([k, v]) => `${k}=${v}`)
+            .join(", ");
+          logEvent(`Raw params added: ${paramString}`, "success");
+          showMessage(`Parameters added: ${paramString}`);
+          
+          // Refresh display
+          refreshCurrentParams();
+        } catch (error) {
+          logEvent(`Error adding raw params: ${error.message}`, "error");
+        }
+      }
+
+      // Display current parameters
+      function refreshCurrentParams() {
+        if (!widget) {
+          return;
         }
 
-        // Promo code functions
-        function setPromoCode(promoCode) {
-            if (!widget) {
-                logEvent('Widget not initialized', 'error');
-                return;
-            }
-            
+        try {
+          // Get the widget container
+          const container = document.getElementById("widget-search-events");
+          const additionalParamsAttr = container.getAttribute("data-additional-params");
+          
+          let currentParams = {};
+          if (additionalParamsAttr) {
             try {
-                logEvent(`Attempting to ${promoCode ? 'set' : 'clear'} promo code...`, 'info');
-                widget.updateData({ promoCode: promoCode });
-                if (promoCode) {
-                    logEvent(`Promo code set: ${promoCode}`, 'success');
-                    showMessage(`Promo code applied: ${promoCode}`);
-                } else {
-                    logEvent('Promo code cleared', 'success');
-                    showMessage('Promo code cleared');
-                }
+              currentParams = JSON.parse(additionalParamsAttr);
             } catch (error) {
-                logEvent(`Error setting promo code: ${error.message}`, 'error');
-                console.error('Promo code error:', error);
+              console.warn("Error parsing additional params:", error);
             }
+          }
+
+          const display = document.getElementById("current-params-display");
+          
+          if (Object.keys(currentParams).length === 0) {
+            display.innerHTML = '<div style="color: #6c757d;">No parameters added yet...</div>';
+          } else {
+            const paramList = Object.entries(currentParams)
+              .map(([key, value]) => `<div style="margin-bottom: 5px;"><strong>${key}:</strong> ${value}</div>`)
+              .join('');
+            
+            display.innerHTML = `
+              <div style="color: #007bff; font-weight: bold; margin-bottom: 10px;">📋 Current Parameters (${Object.keys(currentParams).length}):</div>
+              ${paramList}
+            `;
+          }
+        } catch (error) {
+          console.error("Error refreshing current params:", error);
+        }
+      }
+
+      // Modal control functions
+      function openWidgetModal() {
+        if (!widget) {
+          logEvent("Widget not initialized", "error");
+          return;
         }
 
-        // Custom parameters functions
-        function addCustomParams(params) {
-            if (!widget) {
-                logEvent('Widget not initialized', 'error');
-                return;
-            }
-            
-            try {
-                widget.updateParams(params);
-                const paramString = Object.entries(params).map(([key, value]) => `${key}=${value}`).join(', ');
-                logEvent(`Custom params added: ${paramString}`, 'success');
-                showMessage(`Parameters added: ${paramString}`);
-            } catch (error) {
-                logEvent(`Error adding custom params: ${error.message}`, 'error');
-            }
+        try {
+          widget.openModal();
+          logEvent("Modal opened", "success");
+        } catch (error) {
+          logEvent(`Error opening modal: ${error.message}`, "error");
+        }
+      }
+
+      function closeWidgetModal() {
+        if (!widget) {
+          logEvent("Widget not initialized", "error");
+          return;
         }
 
-        function clearCustomParams() {
-            if (!widget) {
-                logEvent('Widget not initialized', 'error');
-                return;
-            }
-            
-            try {
-                widget.updateParams({});
-                logEvent('Custom params cleared', 'success');
-                showMessage('All custom parameters cleared');
-            } catch (error) {
-                logEvent(`Error clearing custom params: ${error.message}`, 'error');
-            }
+        try {
+          widget.closeModal();
+          logEvent("Modal closed", "success");
+        } catch (error) {
+          logEvent(`Error closing modal: ${error.message}`, "error");
         }
+      }
 
-        // Modal control functions
-        function openWidgetModal() {
-            if (!widget) {
-                logEvent('Widget not initialized', 'error');
-                return;
-            }
-            
-            try {
-                widget.openModal();
-                logEvent('Modal opened', 'success');
-            } catch (error) {
-                logEvent(`Error opening modal: ${error.message}`, 'error');
-            }
-        }
+      // Message display function
+      function showMessage(message) {
+        // Create a temporary message element
+        const messageEl = document.createElement("div");
+        messageEl.className = "status-message";
+        messageEl.textContent = message;
+        messageEl.style.position = "fixed";
+        messageEl.style.top = "20px";
+        messageEl.style.right = "20px";
+        messageEl.style.zIndex = "10000";
+        messageEl.style.maxWidth = "300px";
 
-        function closeWidgetModal() {
-            if (!widget) {
-                logEvent('Widget not initialized', 'error');
-                return;
-            }
-            
-            try {
-                widget.closeModal();
-                logEvent('Modal closed', 'success');
-            } catch (error) {
-                logEvent(`Error closing modal: ${error.message}`, 'error');
-            }
-        }
+        document.body.appendChild(messageEl);
 
-        // Message display function
-        function showMessage(message) {
-            // Create a temporary message element
-            const messageEl = document.createElement('div');
-            messageEl.className = 'status-message';
-            messageEl.textContent = message;
-            messageEl.style.position = 'fixed';
-            messageEl.style.top = '20px';
-            messageEl.style.right = '20px';
-            messageEl.style.zIndex = '10000';
-            messageEl.style.maxWidth = '300px';
-            
-            document.body.appendChild(messageEl);
-            
-            // Remove after 3 seconds
-            setTimeout(() => {
-                if (messageEl.parentNode) {
-                    messageEl.parentNode.removeChild(messageEl);
-                }
-            }, 3000);
-        }
+        // Remove after 3 seconds
+        setTimeout(() => {
+          if (messageEl.parentNode) {
+            messageEl.parentNode.removeChild(messageEl);
+          }
+        }, 3000);
+      }
     </script>
-</body>
+  </body>
 </html>
